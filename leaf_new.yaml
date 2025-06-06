@@ -1,0 +1,7 @@
+path: C:/Users/ADMIN/Pictures/tree_classification_project/dataset_new_leaves
+
+train: images/train
+val: images/val
+
+nc: 5
+names: ['la_mua_vang', 'la_tia_to', 'la_cu_chi', 'la_duong', 'la_sau_dau']

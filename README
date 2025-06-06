@@ -1,0 +1,108 @@
+# 🪴 Nhận Diện và Phân Loại Lá Cây Thuốc bằng YOLOv8
+
+Đề tài này triển khai một hệ thống học sâu nhằm **phát hiện và phân loại nhiều loại lá cây thuốc trong cùng một ảnh** bằng cách sử dụng mô hình YOLOv8. Hệ thống có thể ứng dụng trong nhận dạng dược liệu, hỗ trợ tra cứu tự động, giáo dục y học cổ truyền và quản lý sinh thái.
+
+## 📌 Mục tiêu
+
+- Thu thập và xây dựng tập dữ liệu ảnh gồm 22 loại lá cây thuốc phổ biến.
+- Gán nhãn bounding box cho từng lá trong ảnh.
+- Huấn luyện mô hình YOLOv8 để phát hiện đa đối tượng.
+- Đánh giá hiệu quả mô hình bằng các chỉ số mAP, Precision, Recall, F1-score.
+- Hiển thị kết quả trực quan: ma trận nhầm lẫn, biểu đồ, ảnh có dự đoán.
+
+## 📁 Cấu trúc thư mục
+
+```
+leaf-yolov8-project/
+├── datasets/
+│   ├── images/             # Ảnh gốc (train, val, test)
+│   └── labels/             # Tệp .txt chứa bounding box YOLO format
+├── models/
+│   └── yolov8n.pt          # Mô hình đã huấn luyện (nếu có)
+├── scripts/
+│   ├── train.py            # Mã huấn luyện YOLOv8
+│   ├── predict.py          # Dự đoán ảnh mới
+│   ├── visualize_results.py# Vẽ biểu đồ, confusion matrix
+├── results/
+│   ├── runs/detect/leaf_yolov8_updated/
+│   └── images_output/      # Ảnh có bounding box kết quả
+├── leaf.yaml               # File cấu hình tên lớp YOLO
+├── README.md               # Tài liệu mô tả đề tài
+└── requirements.txt        # Các thư viện cần cài
+```
+
+## 🧪 Bộ dữ liệu
+
+- Tổng cộng: **~500 ảnh**
+- Số lớp: **22 loại lá** bao gồm:
+  `la_tia_to`, `la_du_du`, `la_duong`, `la_duoi`, `la_cu_chi`, `la_lot`, `la_rau_tam`, `la_mua_vang`, `la_danh_danh`, ...
+- Kích thước ảnh: 640×640 (sau resize)
+- Định dạng nhãn: [class_id x_center y_center width height]
+
+## 🧠 Mô hình sử dụng
+
+- **YOLOv8n** (`ultralytics` library)
+- Tập huấn luyện:
+  - Epochs: 50
+  - Batch size: 16
+  - Optimizer: AdamW
+- Đánh giá: mAP@50, Precision, Recall, F1-score
+- Tăng cường dữ liệu: xoay ảnh, lật ngang, thêm nhiễu, điều chỉnh sáng
+
+## 📈 Kết quả
+
+- **mAP@50 trung bình**: ~0.51  
+- **Precision**: ~0.54  
+- **F1-Score**: ~0.52  
+- Một số lớp như `la_tia_to`, `la_du_du` đạt mAP trên 0.6
+
+## 📊 Hình ảnh minh hoạ
+
+- Biểu đồ loss, mAP theo epoch
+- Ma trận nhầm lẫn 22 lớp
+- Biểu đồ tròn mAP@50 giữa các lớp
+- Ảnh minh họa kết quả dự đoán từ ảnh đầu vào
+
+## 🚀 Cài đặt và chạy
+
+```bash
+# 1. Clone project
+git clone https://github.com/your-repo/leaf-yolov8-project
+cd leaf-yolov8-project
+
+# 2. Tạo môi trường ảo (tuỳ chọn)
+python -m venv venv
+source venv/bin/activate  # Hoặc venv\Scripts\activate nếu dùng Windows
+
+# 3. Cài thư viện
+pip install -r requirements.txt
+
+# 4. Huấn luyện (nếu chưa có)
+yolo task=detect mode=train model=yolov8n.pt data=leaf.yaml epochs=50 imgsz=640
+
+# 5. Dự đoán
+yolo task=detect mode=predict model=runs/detect/leaf_yolov8_updated/weights/best.pt source=datasets/images/test
+
+# 6. Hiển thị kết quả
+python scripts/visualize_results.py
+```
+
+## 🛠 Thư viện sử dụng
+
+- [`ultralytics`](https://github.com/ultralytics/ultralytics) – YOLOv8
+- `opencv-python`
+- `matplotlib`
+- `pandas`
+
+## 📌 Hướng phát triển
+
+- Mở rộng tập dữ liệu lên 1000+ ảnh/lớp
+- Triển khai nhận diện thời gian thực với webcam
+- Tích hợp ứng dụng tra cứu thuốc bằng ảnh
+- Kết hợp nhận diện văn bản OCR (ghi chú kèm theo lá)
+
+## 👨‍💻 Tác giả
+
+Nguyễn Đăng Chính
+Khoa Công Nghệ Thông Tin – Trường Đại Học Đại Nam
+

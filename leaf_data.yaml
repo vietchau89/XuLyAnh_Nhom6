@@ -1,0 +1,13 @@
+path: C:/Users/ADMIN/Pictures/tree_classification_project/dataset
+
+train: images/train
+val: images/val
+
+nc: 22
+names: [
+  'la_bach_hong_nu', 'la_nhot', 'la_mo_long', 'la_duoi', 'la_bo_cu_ve',
+  'la_cot_khi', 'la_danh_danh', 'la_don_do', 'la_du_du', 'la_lot',
+  'la_ma_de', 'la_mat_gau', 'la_phen_den', 'la_rang_cua', 'la_rau_tam',
+  'la_xa_den', 'la_san_day', 'la_mua_vang', 'la_tia_to', 'la_cu_chi',
+  'la_duong', 'la_sau_dau'
+]
